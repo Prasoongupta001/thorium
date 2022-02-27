@@ -31,7 +31,7 @@ router.post('/players/:playerName/bookings/:bookingId',function(req,res){
     
     let booking=req.body
     let bookingId=req.params.bookingId
-    for(let i=0; i<playerName; i++){
+    for(let i=0; i<players.length; i++){
         if (players[i].name == name){
             let isbookingPresent =false
             for(let j=0; j<player[i].bookings.length; j++){
