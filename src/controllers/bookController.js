@@ -1,24 +1,64 @@
-const { count } = require("console")
-const authorModel = require("../models/authorModel")
-const bookModel= require("../models/bookModel")
+const mongoose = require('mongoose');
+const bookModels = require("../models/bookModels")
 
-const createBook= async function (req, res) {
+
+
+
+//-----VALIDATION
+const isValid = function (value) {
+    if (typeof value === 'undefined' || value === null) return false//it cheks is there value is null or undefined
+    if (typeof value === 'string' && value.trim().length === 0) return false//it checks the value conAtain only space or not 
+    return true;
+}
+
+//------------------ISVALIDOBJECTID FUNCTION
+const isValidObjectId = function (objectId) {
+    return mongoose.Types.ObjectId.isValid(objectId)
+}
+
+
+const createBook = async function (req, res) {
+    const{author_id , publish_id}=req.body
+    if (!isValid(author_id)) {
+       return res.send({ message: "please provide author id" })
+    }
+    if (!isValidObjectId(author_id)) {
+       return res.send({ message: "please provide valid author id" })
+    }
+
+    if (!isValid(publish_id)) {
+       return  res.send({ message: "please provide publish id" })
+    }
+    if (!isValidObjectId(publish_id)) {
+       return  res.send({ message: "please provide valid publish id" })
+    }
     let book = req.body
-    let bookCreated = await bookModel.create(book)
-    res.send({data: bookCreated})
+    let bookCreated = await bookModels.create(book)
+   return res.send({ data: bookCreated })
 }
 
-const getBooksData= async function (req, res) {
-    let books = await bookModel.find()
-    res.send({data: books})
+
+
+const getBooks= async function (req, res) {
+    
+    let books = await bookModels.find().populate('author_id publish_id')  
+      res.send({data: books})
 }
 
-const getBooksWithAuthorDetails = async function (req, res) {
-    let specificBook = await bookModel.find().populate('author_id')
-    res.send({data: specificBook})
 
+const updateit= async function (req, res) {
+    
+    let books = await bookModels.find()
+    
+    console.log(books)
+    
+     res.send({data: books})
 }
 
-module.exports.createBook= createBook
-module.exports.getBooksData= getBooksData
-module.exports.getBooksWithAuthorDetails = getBooksWithAuthorDetails
+
+
+
+module.exports.updateit = updateit
+module.exports.createBook = createBook
+module.exports.getBooks = getBooks
+

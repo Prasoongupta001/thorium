@@ -2,20 +2,32 @@ const express = require('express');
 const router = express.Router();
 
 const authorController= require("../controllers/authorController")
-const bookController= require("../controllers/bookController")
+const publishController= require("../controllers/publishController")
+const bookController=require("../controllers/bookController")
 
-router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
-})
 
-router.post("/createUser", authorController.createAuthor  )
 
-router.get("/getAuthorsData", authorController.getAuthorsData)
+//---------FIRST API FOR CREATE AUTHOR
+router.post("/createAuthor", authorController.createAuthor  )
 
+//---------SECOND API FOR CREATE PUBLISHER
+router.post("/createPublishers", publishController.Publisher)
+
+//---------THIRD API FOR CREATE BOOK WITH AUTHOR AND PUBLISHER DETAIL
 router.post("/createBook", bookController.createBook  )
 
-router.get("/getBooksData", bookController.getBooksData)
+//---------FOURTH API FOR GET DATA OF AUTHORS AND PUBLISHER-ID
+router.get("/getBooks",bookController.getBooks)
 
-router.get("/getBooksWithAuthorDetails", bookController.getBooksWithAuthorDetails)
+
+
+//-----------FIFTH API FOR UPDATE VALUES OF KEYS
+
+router.put("/updatevalue",bookController.updateit)
+
+
+
+
+
 
 module.exports = router;
