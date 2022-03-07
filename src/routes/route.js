@@ -3,12 +3,19 @@ const router = express.Router();
 // const UserModel= require("../models/userModel.js")
 const UserController= require("../controllers/userController")
 const BookController= require("../controllers/bookController")
+const MiddleWare = require("../middleware/CommonMiddleware")
 
-router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
+router.get("/test-middleware",MiddleWare.Middleware,function(req, res) {
+    res.send("My first ever testing for Middleware")
 })
 
-router.post("/createUser", UserController.createUser  )
+
+
+router.get("/test-middleware-2",MiddleWare.Middleware,function(req, res) {
+    res.send("My first ever testing for Middleware 2")
+})
+
+
 
 router.get("/getUsersData", UserController.getUsersData)
 
