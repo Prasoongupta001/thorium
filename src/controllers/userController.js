@@ -7,7 +7,7 @@ const createUser = async function (abcd, xyz) {
   //the second parameter is always the response
   let data = abcd.body;
   let savedData = await userModel.create(data);
-  console.log(abcd.newAtribute);
+  // console.log(abcd.newAtribute);
   xyz.send({ msg: savedData });
 };
 
@@ -114,9 +114,19 @@ const postMessage = async function (req, res) {
     //return the updated user document
     return res.send({status: true, data: updatedUser})
 }
+const deleteUser = async function( req,res)
+{
+let id = req.params.userId;
+let userdel = await userModel.findByIdAndUpdate(
+  {_id:id},{$set:{isDeleted:true}},
+  {new:true})
+  res.send({status:true,msg:userdel})
+}
+
 
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
 module.exports.postMessage = postMessage
+module.exports.deleteUser = deleteUser;
